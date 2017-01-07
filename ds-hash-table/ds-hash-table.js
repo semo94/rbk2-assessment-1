@@ -1,15 +1,38 @@
 var makeHashTable = function() {
-  //Do not change the max!
   var max = 4;
-
   return {
     _storage: [],
     retrieve: function(key) {
-      //your code is here
+      var index = hashFn(key,max);
+      if(_storage[index] === undefined){
+        return "no value founds";
+      }
+      for (var i = 0; i < _storage[index].length; i++) {
+        if(_storage[index][i][0]===key){
+          return _storage[index][i][1];
+        }
+      }
+      return "no value founds";
+      
     },
 
     insert: function(key, value) {
-      //your code is here
+      var index = hashFn(key,max);
+      if(_storage[index] === undefined){
+        _storage[index] = [];
+      }
+      var bucket = [key,value];
+      var flage = false;
+      for (var i = 0; i < _storage[index].length; i++) {
+        if(_storage[index][i][0] === key){
+          flage = false;
+          break;
+        }
+      }
+      if(flage){
+        _storage[index].push(bucket);
+      }
+    }
   };
 };
 
@@ -23,3 +46,4 @@ var hashFn = function(str, max) {
   }
   return hash;
 };
+
